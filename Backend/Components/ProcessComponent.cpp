@@ -4,21 +4,58 @@
 #include <sstream>
 #include <algorithm>
 #include <dirent.h>
-#include <sys/types.h>
+#include <sys/stat.h>
 #include <pwd.h>
+#include <cstring>
 
 bool isNum(const char* str) {
-    if(str == '\0') return false;
+    if(*str == '\0') return false;
     while(*str) {
-        if (!std::isdigit(*str)) return false;
+        if (!std::isdigit(*str)) {
+            return false;
+        }
         str++;
     }
+    return true;
 }
 
-ProcessComponent::ProcessComponent(const char* path)  : Component("/proc") {}
+ProcessComponent::ProcessComponent(const char* path)  : Component(path) {}
 
 std::vector<ProcessFileStat> ProcessComponent::ReadStat() {
+    std::vector<ProcessFileStat> result{};
+    
+    struct stat st;
+    struct dirent *dr;
+    DIR* dir;
+    dir = opendir(target_file_path);
+    
+    while((dr = readdir(dir)) != 0) {
 
+        if (std::strcmp(dr->d_name, ".") == 0 || std::strcmp(dr->d_name, "..") == 0){
+            continue;
+        }
+
+        std::string temp_path = std::string(target_file_path) + '/' + dr->d_name;
+        if (lstat(temp_path.c_str(), &st) == -1) {
+            continue;
+        }
+
+        if(S_ISDIR(st.st_mode)){
+            try {
+                int pid = std::stoi(dr->d_name);
+                ProcessFileStat stat = ReadProcess(pid);
+                
+                if (stat.PID != 0) {
+                    result.push_back(stat);
+                }
+            } catch(...) {
+                continue;
+            }
+
+        }
+    }
+    closedir(dir);
+    return result;
 }
 
 ProcessFileStat ProcessComponent::ReadProcess(int PID) {
@@ -34,28 +71,28 @@ ProcessFileStat ProcessComponent::ReadProcess(int PID) {
     bool found_name = false, found_state = false, found_uid = false;
 
     while(std::getline(file, line)) {
-        std::istringstream file(line);
+        std::istringstream iss(line);
         std::string temp_key;
 
-        file >> temp_key;
+        iss >> temp_key;
 
         if (temp_key == "Name:") {
-            file >> res.name;
+            iss >> res.name;
             found_name = true;
         }
         if (temp_key == "State:") {
-            file >> res.state;
+            iss >> res.state;
             found_state = true;
         }
         if (temp_key == "Uid:") {
-            file >> uid;
-            found_name = true;
+            iss >> uid;
+            found_uid = true;
         }
 
         if (found_name && found_state && found_uid) break;
 
         if(found_uid) {
-            struct passwd* pw = getpwuid(uid);
+            struct passwd* pw = getpwuid_r(uid);
             res.user = pw ? pw->pw_name : std::to_string(uid);
         }
     }
