@@ -23,6 +23,8 @@ CPUFileStat CPUComponent::ReadRaw() const {
          >> res.system >> res.idle >> res.iowait
          >> res.irq >> res.softirq >> res.steal
          >> res.guest >> res.guest_nice;
+         
+    return res;
 }
 
 double CPUComponent::CalcPercent(const CPUFileStat& prev, const CPUFileStat& curr) {
