@@ -8,9 +8,11 @@ class ResourceMonitor {
 public:
     ResourceMonitor();
 
-    CPUComponent& GetCPU();
-    RAMComponent& GetRAM();
-    ProcessComponent& GetProc();
+    void Update();
+
+    CPUComponent& GetCPU() { return m_cpu; }
+    RAMComponent& GetRAM() { return m_ram; }
+    ProcessComponent& GetProc() { return m_proc; }
 private:
     CPUComponent m_cpu;
     RAMComponent m_ram;

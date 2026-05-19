@@ -1,22 +1,29 @@
 #pragma once
 
-#include <vector>
-#include <string>
-
 #include "Component.hpp"
 
+#include <string>
+#include <vector>
+
 struct ProcessFileStat {
-    int PID;
+    int PID = 0;
     std::string name;
-    std::string user;
     std::string state;
+    std::string user;
 };
 
-
-class ProcessComponent : public Component<std::vector<ProcessFileStat>> {
+class ProcessComponent : public Component {
 public:
-    ProcessComponent(const char* path);
-    std::vector<ProcessFileStat> ReadStat() override;
+    explicit ProcessComponent(const char* path = "/proc");
+
+    void Update() override;
+    const std::vector<ProcessFileStat>& GetList() const { return m_list; }
+
 private:
-    ProcessFileStat ReadProcess(int PID);
+    std::vector<ProcessFileStat> m_list;
+
+    std::vector<ProcessFileStat> ReadStat() const;
+    ProcessFileStat ReadProcess(int pid) const;
+
+    static bool IsNum(const char* str);
 };

@@ -1,28 +1,21 @@
 #include "RAMComponent.hpp"
 
 #include <fstream>
-#include <string>
 
 RAMComponent::RAMComponent(const char* path) : Component(path) {}
 
-RAMFileStat RAMComponent::ReadStat() {
+void RAMComponent::Update() {
     std::ifstream file(target_file_path);
 
-    RAMFileStat res{};
     std::string temp_key, temp_unit;
     long long value;
-    while(file >> temp_key >> value >> temp_unit) {
+    while (file >> temp_key >> value >> temp_unit) {
         if (temp_key == "MemTotal:") {
-            res.total = value;
+            m_stats.total_kb = value;
         }
-
+        
         if (temp_key == "MemAvailable:") {
-            res.available = value;
+            m_stats.available_kb = value;
         }
     }
-    return res;
-}
-
-double RAMComponent::GetRAMUsagePercentage(const double avlb, const double ttl) {
-    return (ttl - avlb) / ttl * 100;
 }

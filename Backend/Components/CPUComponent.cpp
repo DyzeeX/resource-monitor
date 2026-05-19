@@ -1,43 +1,41 @@
 #include "CPUComponent.hpp"
 
-#include <iostream>
 #include <fstream>
-#include <string>
 
-CPUComponent::CPUComponent(const char* path) : Component(path) {}
+CPUComponent::CPUComponent(const char* path) : Component(path) {
+    m_prev = ReadRaw(); 
+}
 
-CPUFileStat CPUComponent::ReadStat() {
+void CPUComponent::Update() {
+    CPUFileStat curr = ReadRaw();
+
+    m_usage_percent = CalcPercent(m_prev, curr);
+    m_prev = curr;
+}
+
+CPUFileStat CPUComponent::ReadRaw() const {
     std::ifstream file(target_file_path);
 
     std::string temp;
     CPUFileStat res{};
-    
-    if (file >> temp >> res.user >> res.nice 
-             >> res.system >> res.idle >> res.iowait 
-             >> res.irq >> res.softirq >> res.steal 
-             >> res.guest >> res.guest_nice) {
-        return res;
-    }
-    return {};
 
+    file >> temp >> res.user >> res.nice 
+         >> res.system >> res.idle >> res.iowait
+         >> res.irq >> res.softirq >> res.steal
+         >> res.guest >> res.guest_nice;
 }
 
-    double CPUComponent::GetCPUPercentage(const CPUFileStat& previous, const CPUFileStat& current) {
+double CPUComponent::CalcPercent(const CPUFileStat& prev, const CPUFileStat& curr) {
+    auto sum = [](const CPUFileStat& s) {
+        return s.user + s.nice + s.system + s.idle + s.iowait + s.irq + s.softirq + s.steal;
+    };
 
-        auto totalPrev = previous.user + previous.nice + previous.system 
-                         + previous.idle + previous.iowait + previous.irq
-                         + previous.softirq + previous.steal + previous.guest
-                         + previous.guest_nice;
-        auto totalCurr = current.user + current.nice + current.system 
-                         + current.idle + current.iowait + current.irq
-                         + current.softirq + current.steal + current.guest
-                         + current.guest_nice;
+    auto dTotal = sum(curr) - sum(prev);
 
-        auto busyPrev = totalPrev - previous.idle - previous.iowait;
-        auto busyCurr = totalCurr - current.idle - current.iowait;
-
-        auto dTotal = totalCurr - totalPrev;
-        if (dTotal == 0) return 0.0;
-
-        return (double)(busyCurr - busyPrev) / dTotal * 100.0;
+    if (dTotal == 0) {
+        return 0.0;
     }
+
+    auto dBusy = (sum(curr) - curr.idle - curr.iowait) - (sum(prev) - prev.idle - prev.iowait);
+    return (double)dBusy / dTotal * 100.0;
+}

@@ -1,7 +1,9 @@
 #include "ResourceMonitor.hpp"
 
-ResourceMonitor::ResourceMonitor() : m_cpu("/proc/stat"), m_ram("/proc/meminfo"), m_proc("/procc") {}
+ResourceMonitor::ResourceMonitor() : m_cpu(), m_ram(), m_proc() {}
 
-CPUComponent& ResourceMonitor::GetCPU() { return m_cpu; }
-RAMComponent& ResourceMonitor::GetRAM() { return m_ram; }
-ProcessComponent& ResourceMonitor::GetProc() { return m_proc; }
+void ResourceMonitor::Update() {
+    m_cpu.Update();
+    m_ram.Update();
+    m_proc.Update();
+}
