@@ -10,5 +10,5 @@ class RAMComponent : public Component<RAMFileStat> {
 public:
     RAMComponent(const char* path);
     RAMFileStat ReadStat() override;
-    double GetRAMPercentage(const double avlb, const double ttl);
+    double GetRAMUsagePercentage(const double avlb, const double ttl);
 };

@@ -22,3 +22,7 @@ RAMFileStat RAMComponent::ReadStat() {
     }
     return res;
 }
+
+double RAMComponent::GetRAMUsagePercentage(const double avlb, const double ttl) {
+    return (ttl - avlb) / ttl * 100;
+}
