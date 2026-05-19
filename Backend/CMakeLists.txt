@@ -14,6 +14,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_executable(resource-monitor
     "main.cpp"
+    "Core/ResourceMonitor.cpp"
+    "Components/CPUComponent.cpp"
+    "Components/RAMComponent.cpp"
+    "Components/ProcessComponent.cpp"
     )
 
 target_link_libraries(resource-monitor PRIVATE 
