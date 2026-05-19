@@ -10,6 +10,6 @@ class CPUComponent : public Component<CPUFileStat> {
 public:
     CPUComponent(const char* path);
     CPUFileStat ReadStat() override;
-    float GetCPUPercentage(const CPUFileStat& previous, const CPUFileStat& present);
+    double GetCPUPercentage(const CPUFileStat& previous, const CPUFileStat& current);
 private:
 };  

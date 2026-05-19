@@ -25,3 +25,23 @@ CPUFileStat CPUComponent::ReadStat() {
     return {};
 
 }
+
+    double CPUComponent::GetCPUPercentage(const CPUFileStat& previous, const CPUFileStat& current) {
+
+        auto totalPrev = previous.user + previous.nice + previous.system 
+                         + previous.idle + previous.iowait + previous.irq
+                         + previous.softirq + previous.steal + previous.guest
+                         + previous.guest_nice;
+        auto totalCurr = current.user + current.nice + current.system 
+                         + current.idle + current.iowait + current.irq
+                         + current.softirq + current.steal + current.guest
+                         + current.guest_nice;
+
+        auto busyPrev = totalPrev - previous.idle - previous.iowait;
+        auto busyCurr = totalCurr - current.idle - current.iowait;
+
+        auto dTotal = totalCurr - totalPrev;
+        if (dTotal == 0) return 0.0;
+
+        return (double)(busyCurr - busyPrev) / dTotal * 100.0;
+    }
