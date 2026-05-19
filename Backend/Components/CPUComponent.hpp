@@ -11,5 +11,4 @@ public:
     CPUComponent(const char* path);
     CPUFileStat ReadStat() override;
     double GetCPUPercentage(const CPUFileStat& previous, const CPUFileStat& current);
-private:
 };  

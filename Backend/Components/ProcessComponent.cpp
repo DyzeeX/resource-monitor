@@ -90,10 +90,17 @@ ProcessFileStat ProcessComponent::ReadProcess(int PID) {
         }
 
         if (found_name && found_state && found_uid) break;
+    }
 
-        if(found_uid) {
-            struct passwd* pw = getpwuid_r(uid);
-            res.user = pw ? pw->pw_name : std::to_string(uid);
+    if (found_uid) {
+        struct passwd pw{};
+        struct passwd* pw_result = nullptr;
+        std::vector<char> buf(2048);
+        
+        if (getpwuid_r(uid, &pw, buf.data(), buf.size(), &pw_result) == 0 && pw_result) {
+            res.user = pw_result->pw_name;
+        } else {
+            res.user = std::to_string(uid);
         }
     }
 

@@ -2,11 +2,15 @@
 #include <thread>
 #include <chrono>
 
-#include "Components/RAMComponent.hpp"
+#include "Components/ProcessComponent.hpp"
 
 int main() { 
-    
-    RAMComponent ram("/proc/meminfo");
-    std::cout << ram.ReadStat().total << ' ' << ram.ReadStat().available;
+    ProcessComponent pc("/proc");
+
+    auto res = pc.ReadStat();
+
+    for (const auto& p : res) {
+        std::cout << p.PID << "\t" << p.user << "\t\t" << p.state << "\t" << p.name << std::endl;
+    }
     return 0;
 }
