@@ -10,7 +10,7 @@ FetchContent_Declare(
         )
 FetchContent_MakeAvailable(json)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 add_executable(resource-monitor
     "main.cpp"
@@ -19,6 +19,8 @@ add_executable(resource-monitor
     "Components/RAMComponent.cpp"
     "Components/ProcessComponent.cpp"
     )
+
+target_include_directories(resource-monitor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(resource-monitor PRIVATE 
     nlohmann_json::nlohmann_json
