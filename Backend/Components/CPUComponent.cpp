@@ -11,10 +11,6 @@ CPUFileStat CPUComponent::ReadStat() {
 
     std::string temp;
     CPUFileStat res{};
-
-    // struct CPUFileStat {
-    //     long long user, nice, system, idle, iowait, irq, softirq, steal, guest, guest_nice;
-    // };
     
     if (file >> temp >> res.user >> res.nice 
              >> res.system >> res.idle >> res.iowait 
