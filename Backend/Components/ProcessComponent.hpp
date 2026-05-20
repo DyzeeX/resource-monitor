@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+// Fields we need from /proc/<PID>/status
 struct ProcessFileStat {
     int PID = 0;
     std::string name;
@@ -22,7 +23,9 @@ public:
 private:
     std::vector<ProcessFileStat> m_list;
 
+    // Read every process from /proc and get values
     std::vector<ProcessFileStat> ReadStat() const;
+    // Read just one process by it PID
     ProcessFileStat ReadProcess(int pid) const;
 
     static bool IsNum(const char* str);

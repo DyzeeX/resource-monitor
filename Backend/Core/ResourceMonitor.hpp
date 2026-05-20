@@ -4,10 +4,12 @@
 #include "Components/ProcessComponent.hpp"
 #include "Components/RAMComponent.hpp"
 
+// Stiore all components in 1 class
 class ResourceMonitor {
 public:
     ResourceMonitor();
 
+    // Delegate all components Update() methods 
     void Update();
 
     const CPUComponent& GetCPU() const { return m_cpu; }

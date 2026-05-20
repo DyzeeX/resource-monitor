@@ -2,6 +2,7 @@
 
 #include "Component.hpp"
 
+// 2 fields and some helping us functions 
 struct RAMStats {
     long long total_kb = 0, available_kb = 0;
 
@@ -18,7 +19,8 @@ struct RAMStats {
 class RAMComponent : public Component {
 public:
     explicit RAMComponent(const char* path = "/proc/meminfo");
-
+    
+    // Get 2 values: MemTotal and MemAvailable
     void Update() override;
     const RAMStats& GetStats() const { return m_stats; }
 

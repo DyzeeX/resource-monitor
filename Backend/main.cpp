@@ -15,6 +15,7 @@ int main() {
     std::mutex conn_mutex;
     std::set<crow::websocket::connection*> clients;
 
+    // Creating WebSocket using Crow
     CROW_WEBSOCKET_ROUTE(app, "/ws")
         .onopen([&](crow::websocket::connection& conn) {
             std::lock_guard<std::mutex> lock(conn_mutex);
@@ -30,6 +31,7 @@ int main() {
 
         });
 
+    // Background thread to update metrics
     std::thread([&]() {
     while (true) {
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
