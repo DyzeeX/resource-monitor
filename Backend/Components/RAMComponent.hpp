@@ -20,7 +20,7 @@ public:
     explicit RAMComponent(const char* path = "/proc/meminfo");
 
     void Update() override;
-    RAMStats& GetStats() { return m_stats; }
+    const RAMStats& GetStats() const { return m_stats; }
 
 private:
     RAMStats m_stats{};
