@@ -22,8 +22,8 @@ nlohmann::json JSONManager::Convert(const ResourceMonitor& rm) {
             {"state", p.state},
             {"user",  p.user}
         });
-        return nj;
     }
+    return nj;
 }
 
 std::string JSONManager::ConvertToString(const ResourceMonitor& rm) {

@@ -8,6 +8,6 @@ class JSONManager {
 public:
     JSONManager() = delete;    
 
-    nlohmann::json Convert(const ResourceMonitor& rm);
-    std::string ConvertToString(const ResourceMonitor& rm);
+    static nlohmann::json Convert(const ResourceMonitor& rm);
+    static std::string ConvertToString(const ResourceMonitor& rm);
 };

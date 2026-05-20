@@ -1,3 +1,4 @@
 {
+    "cmake.buildDirectory": "/home/dyzeex/resource-monitor/Backend/build",
     "cmake.sourceDirectory": "/home/dyzeex/resource-monitor/Backend"
 }

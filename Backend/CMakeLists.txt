@@ -51,8 +51,6 @@ endif()
 # end check OpenSSL
 
 # Crow
-set(CROW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-set(CROW_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(
     crow
     GIT_REPOSITORY https://github.com/CrowCpp/Crow.git
@@ -68,11 +66,12 @@ target_include_directories(crow_lib INTERFACE ${crow_SOURCE_DIR}/include)
 
 find_package(Threads REQUIRED)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/bin)
 
 add_executable(resource-monitor
     "main.cpp"
     "Core/ResourceMonitor.cpp"
+    "Core/JSONManager.cpp"
     "Components/CPUComponent.cpp"
     "Components/RAMComponent.cpp"
     "Components/ProcessComponent.cpp"
@@ -90,6 +89,5 @@ target_link_libraries(resource-monitor PRIVATE
 )
 
 target_compile_definitions(resource-monitor PRIVATE
-    CROW_USE_BOOST=0
     $<$<BOOL:${OPENSSL_FOUND}>:CROW_ENABLE_SSL>
 )
