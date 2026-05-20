@@ -1,0 +1,197 @@
+:root {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #252525;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --border: #333333;
+  --accent-cpu: #ff6b6b;
+  --accent-ram: #4ecdc4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  padding: 16px 24px;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.header span {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.left-panel::-webkit-scrollbar { width: 4px; }
+.left-panel::-webkit-scrollbar-track { background: transparent; }
+.left-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.metric-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.process-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-cpu);
+}
+
+.chart-container {
+  background-color: var(--bg-tertiary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-row:last-child { border-bottom: none; }
+
+.info-row .label { color: var(--text-secondary); }
+.info-row .value { font-weight: 600; }
+
+.filter-input {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: var(--accent-ram);
+}
+
+.filter-input::placeholder { color: var(--text-secondary); }
+
+.table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar { width: 4px; }
+.table-wrapper::-webkit-scrollbar-track { background: var(--bg-secondary); }
+.table-wrapper::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.process-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.process-table thead {
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-tertiary);
+}
+
+.process-table th {
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid var(--border);
+}
+
+.process-table th:hover { color: var(--text-primary); }
+
+.process-table th.asc::after { content: ' ▲'; }
+.process-table th.desc::after { content: ' ▼'; }
+.process-table th[data-sort]:not(.asc):not(.desc)::after { content: ' ·'; opacity: 0.3; }
+
+.process-table tbody tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.process-table tbody tr:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.process-table td { padding: 8px; }
+.process-table td:first-child { color: var(--text-secondary); }
