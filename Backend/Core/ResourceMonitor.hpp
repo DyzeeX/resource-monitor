@@ -3,6 +3,7 @@
 #include "Components/CPUComponent.hpp"
 #include "Components/ProcessComponent.hpp"
 #include "Components/RAMComponent.hpp"
+#include "Components/DiskComponent.hpp"
 
 // Stiore all components in 1 class
 class ResourceMonitor {
@@ -15,8 +16,10 @@ public:
     const CPUComponent& GetCPU() const { return m_cpu; }
     const RAMComponent& GetRAM() const { return m_ram; }
     const ProcessComponent& GetProc() const { return m_proc; }
+    const DiskComponent& GetDisk() const { return m_disk; }
 private:
     CPUComponent m_cpu;
     RAMComponent m_ram;
     ProcessComponent m_proc;
+    DiskComponent m_disk;
 };

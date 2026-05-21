@@ -1,9 +1,10 @@
 #include "ResourceMonitor.hpp"
 
-ResourceMonitor::ResourceMonitor() : m_cpu(), m_ram(), m_proc() {}
+ResourceMonitor::ResourceMonitor() : m_cpu(), m_ram(), m_proc(), m_disk() {}
 
 void ResourceMonitor::Update() {
     m_cpu.Update();
     m_ram.Update();
     m_proc.Update();
+    m_disk.Update();
 }

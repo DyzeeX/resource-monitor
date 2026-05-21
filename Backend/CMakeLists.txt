@@ -75,6 +75,7 @@ add_executable(resource-monitor
     "Components/CPUComponent.cpp"
     "Components/RAMComponent.cpp"
     "Components/ProcessComponent.cpp"
+    "Components/DiskComponent.cpp"
     )
 
 target_include_directories(resource-monitor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

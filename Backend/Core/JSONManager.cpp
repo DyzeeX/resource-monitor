@@ -23,6 +23,12 @@ nlohmann::json JSONManager::Convert(const ResourceMonitor& rm) {
             {"user",  p.user}
         });
     }
+    const auto& disk = rm.GetDisk();
+
+    nj["disk"]["read"] = disk.GetReadBytesPerSec();
+    nj["disk"]["write"] = disk.GetWriteBytesPerSec();
+    nj["disk"]["io"] = disk.GetIOUtilPercent();
+
     return nj;
 }
 
