@@ -56,7 +56,7 @@ export function createCPUChart(container: HTMLElement) {
       }
     ],
     scales: {
-      x: { min: 0, max: 60 },
+      x: { time: false, min: 0, max: 60 },
       y: { min: 0, max: 100 }
     }
   }
@@ -95,7 +95,7 @@ export function createRAMChart(container: HTMLElement) {
       }
     ],
     scales: {
-      x: { min: 0, max: 60 },
+      x: { time: false, min: 0, max: 60 },
       y: { min: 0, max: 100 }
     }
   }

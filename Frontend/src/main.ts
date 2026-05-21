@@ -30,7 +30,7 @@ function handleData(data: SystemData) {
   allProcesses = data.processes
   document.getElementById('process-count')!.textContent = String(data.processes.length)
   renderTable()
-
+  
   document.getElementById('update-time')!.textContent =
     new Date().toLocaleTimeString('ru-RU')
 }
@@ -61,7 +61,6 @@ function renderTable() {
 
   const tbody = document.getElementById('process-list')!
   tbody.innerHTML = list
-    .slice(0, 50)
     .map(p => `
       <tr>
         <td>${p.pid}</td>
