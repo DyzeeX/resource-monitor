@@ -27,6 +27,25 @@
         </div>
 
         <div class="metric-card">
+          <h2 class="card-title">Disk</h2>
+          <div class="disk-stats">
+            <div class="info-row">
+              <span class="label">Read:</span>
+              <span class="value accent-purple" id="disk-read">0 MB/s</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Write:</span>
+              <span class="value accent-pink" id="disk-write">0 MB/s</span>
+            </div>
+            <div class="info-row">
+              <span class="label">I/O util:</span>
+              <span class="value" id="disk-io">0%</span>
+            </div>
+          </div>
+          <div class="chart-container" id="disk-chart"></div>
+        </div>
+
+        <div class="metric-card">
           <h2 class="card-title">System</h2>
           <div class="info-row">
             <span class="label">Total processes:</span>

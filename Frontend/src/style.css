@@ -7,6 +7,8 @@
   --border: #333333;
   --accent-cpu: #ff6b6b;
   --accent-ram: #4ecdc4;
+  --accent-purple: #a29bfe;
+  --accent-pink: #fd79a8;
 }
 
 * {
@@ -195,3 +197,6 @@ html, body {
 
 .process-table td { padding: 8px; }
 .process-table td:first-child { color: var(--text-secondary); }
+
+.accent-purple { color: var(--accent-purple) !important; }
+.accent-pink { color: var(--accent-pink) !important; }

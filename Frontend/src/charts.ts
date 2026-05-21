@@ -118,3 +118,71 @@ export function updateChart(chart: uPlot, buffer: RingBuffer, value: number) {
   buffer.push(value)
   chart.setData([buffer.getTimeStamps(), buffer.getValues()])
 }
+
+export function createDiskChart(container: HTMLElement) {
+  const readBuffer = new RingBuffer(60)
+  const writeBuffer = new RingBuffer(60)
+
+  const opts: uPlot.Options = {
+    title: '',
+    width: container.offsetWidth || 400,
+    height: 180,
+    series: [
+      {},
+      {
+        label: 'Read',
+        stroke: '#a29bfe',
+        fill: '#a29bfe22',
+        width: 2,
+        points: { show: false }
+      },
+      {
+        label: 'Write',
+        stroke: '#fd79a8',
+        fill: '#fd79a822',
+        width: 2,
+        points: { show: false }
+      }
+    ],
+    axes: [
+      {
+        stroke: '#555',
+        grid: { stroke: '#333', width: 0.5 },
+        values: (_u, vals) => vals.map(v => {
+          const d = new Date(v * 1000)
+          return d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        })
+      },
+      {
+        stroke: '#555',
+        grid: { stroke: '#333', width: 0.5 },
+        label: 'MB/s',
+        values: (_u, vals) => vals.map(v => v.toFixed(1))
+      }
+    ],
+    scales: {
+      x: {},
+      y: { min: 0 }
+    }
+  }
+
+  const chart = new uPlot(
+    opts,
+    [readBuffer.getTimeStamps(), readBuffer.getValues(), writeBuffer.getValues()],
+    container
+  )
+
+  return { chart, readBuffer, writeBuffer }
+}
+
+export function updateDiskChart(
+  chart: uPlot,
+  readBuffer: RingBuffer,
+  writeBuffer: RingBuffer,
+  readValue: number,
+  writeValue: number
+) {
+  readBuffer.push(readValue)
+  writeBuffer.push(writeValue)
+  chart.setData([readBuffer.getTimeStamps(), readBuffer.getValues(), writeBuffer.getValues()])
+}

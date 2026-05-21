@@ -15,4 +15,9 @@ export interface SystemData {
     usage: number
   }
   processes: Process[]
+  disk: {
+    read: number
+    write: number
+    io: number 
+  }
 }
