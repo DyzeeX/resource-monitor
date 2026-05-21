@@ -22,9 +22,10 @@ export class RingBuffer {
     ]
   }
 
-  getTimeStamps(): number[] {
-    return Array.from({ length: this.maxSize }, (_, i) => i)
-  }
+getTimeStamps(): number[] {
+  const now = Math.floor(Date.now() / 1000)
+  return Array.from({ length: this.maxSize }, (_, i) => now - (this.maxSize - 1 - i))
+}
 }
 
 export function createCPUChart(container: HTMLElement) {
@@ -47,7 +48,11 @@ export function createCPUChart(container: HTMLElement) {
     axes: [
       {
         stroke: '#555',
-        grid: { stroke: '#333', width: 0.5 }
+        grid: { stroke: '#333', width: 0.5 },
+        values: (_u, vals) => vals.map(v => {
+          const d = new Date(v * 1000)
+          return d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        })
       },
       {
         stroke: '#555',
@@ -56,7 +61,7 @@ export function createCPUChart(container: HTMLElement) {
       }
     ],
     scales: {
-      x: { time: false, min: 0, max: 60 },
+      x: {},
       y: { min: 0, max: 100 }
     }
   }
@@ -86,7 +91,11 @@ export function createRAMChart(container: HTMLElement) {
     axes: [
       {
         stroke: '#555',
-        grid: { stroke: '#333', width: 0.5 }
+        grid: { stroke: '#333', width: 0.5 },
+        values: (_u, vals) => vals.map(v => {
+          const d = new Date(v * 1000)
+          return d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        })
       },
       {
         stroke: '#555',
@@ -95,7 +104,7 @@ export function createRAMChart(container: HTMLElement) {
       }
     ],
     scales: {
-      x: { time: false, min: 0, max: 60 },
+      x: {},
       y: { min: 0, max: 100 }
     }
   }
