@@ -112,3 +112,17 @@ document.getElementById('process-filter')!.addEventListener('input', (e) => {
 })
 
 new MonitorWebSocket('ws://localhost:2006/ws', handleData)
+
+function setupResize(chart: uPlot, container: HTMLElement) {
+  const observer = new ResizeObserver(() => {
+    chart.setSize({
+      width: container.offsetWidth,
+      height: 180
+    })
+  })
+  observer.observe(container)
+}
+
+setupResize(cpuChart, cpuContainer)
+setupResize(ramChart, ramContainer)
+setupResize(diskChart, diskContainer)
