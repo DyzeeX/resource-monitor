@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "dist-electron/main.js",
   "scripts": {
-    "dev": "concurrently \"vite\" \"sleep 2 && electron .\"",
-    "build": "vite build && tsc -p tsconfig.electron.json",
-    "preview": "vite preview"
+  "dev": "concurrently \"vite\" \"sleep 2 && electron .\"",
+  "build": "vite build && tsc -p tsconfig.electron.json",
+  "start": "NODE_ENV=production electron .",
+  "preview": "vite preview"
   },
   "devDependencies": {
     "concurrently": "^8.0.0",
