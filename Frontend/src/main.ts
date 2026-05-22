@@ -20,6 +20,7 @@ function handleData(data: SystemData) {
   
   // CPU
   const cpu = data.cpu.usage
+
   document.getElementById('cpu-value')!.textContent = `${cpu.toFixed(1)}%`
   updateChart(cpuChart, cpuBuffer, cpu)
 
@@ -27,6 +28,7 @@ function handleData(data: SystemData) {
   const ramUsed = data.ram.used
   const ramTotal = data.ram.total
   const ramPercent = data.ram.usage
+
   document.getElementById('ram-value')!.textContent = `${ramUsed} / ${ramTotal} MB`
   document.getElementById('ram-total')!.textContent = `${ramTotal} MB`
   updateChart(ramChart, ramBuffer, ramPercent)
@@ -42,6 +44,7 @@ function handleData(data: SystemData) {
   updateDiskChart(diskChart, readBuffer, writeBuffer, diskRead, diskWrite)
 
   allProcesses = data.processes
+  
   document.getElementById('process-count')!.textContent = String(data.processes.length)
   renderTable()
   
