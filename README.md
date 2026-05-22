@@ -180,7 +180,7 @@ Function **renderTable()**
 ## Build
 
 ``` bash
-git clone github.com/DyzeeX/resource-monitor.git
+git clone https://github.com/DyzeeX/resource-monitor.git
 ```
 Before build, make sure that you have the following components downloaded:
 [CMake](https://github.com/Kitware/CMake)
