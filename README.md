@@ -60,7 +60,7 @@ Main C++ file, send JSON package through WebSocket to 2006 port
 }
 ```
 
-##Frontend/  
+## Frontend/  
 Frontend built uisng [Vite](https://vite.dev/). Electron framework, uPlot library and HTML/CSS/TypeScript given a WebUI app.
 
 ### `electron/main.ts`
